@@ -69,6 +69,11 @@ class Message
     protected $dryRun = false;
 
     /**
+     * @var bool
+     */
+    protected $mutableContent = false;
+
+    /**
      * Set Registration Ids.
      *
      * @param array $ids
@@ -410,6 +415,22 @@ class Message
     }
 
     /**
+     * @return bool
+     */
+    public function isMutableContent()
+    {
+        return $this->mutableContent;
+    }
+
+    /**
+     * @param bool $mutableContent
+     */
+    public function setMutableContent($mutableContent)
+    {
+        $this->mutableContent = (bool) $mutableContent;
+    }
+
+    /**
      * To JSON
      * Utility method to put the JSON into the
      * GCM proper format for sending the message.
@@ -445,6 +466,9 @@ class Message
         }
         if ($this->dryRun) {
             $json['dry_run'] = $this->dryRun;
+        }
+        if ($this->mutableContent) {
+            $json['mutable_content'] = $this->mutableContent;
         }
 
         return Json::encode($json);
