@@ -74,6 +74,11 @@ class Message
     protected $mutableContent = false;
 
     /**
+     * @var string
+     */
+    protected $clickAction;
+
+    /**
      * Set Registration Ids.
      *
      * @param array $ids
@@ -431,6 +436,22 @@ class Message
     }
 
     /**
+     * @return string
+     */
+    public function getClickAction()
+    {
+        return $this->clickAction;
+    }
+
+    /**
+     * @param string $clickAction
+     */
+    public function setClickAction($clickAction)
+    {
+        $this->clickAction = $clickAction;
+    }
+
+    /**
      * To JSON
      * Utility method to put the JSON into the
      * GCM proper format for sending the message.
@@ -469,6 +490,9 @@ class Message
         }
         if ($this->mutableContent) {
             $json['mutable_content'] = $this->mutableContent;
+        }
+        if ($this->clickAction) {
+            $json['click_action'] = $this->clickAction;
         }
 
         return Json::encode($json);
